@@ -26,9 +26,9 @@ public class EchoClient {
                 new InetSocketAddress(NioDemoConfig.SOCKET_SERVER_IP,
                         NioDemoConfig.SOCKET_SERVER_PORT);
 
-        // 1、获取通道（channel）
+        //1、获取通道（channel）
         SocketChannel socketChannel = SocketChannel.open(address);
-        // 2、切换成非阻塞模式
+        //2、切换成非阻塞模式
         socketChannel.configureBlocking(false);
         //不断的自旋、等待连接完成，或者做一些其他的事情
         while (!socketChannel.finishConnect()) {
@@ -72,14 +72,14 @@ public class EchoClient {
                                 String next = scanner.next();
                                 buffer.put((Dateutil.getNow() + " >>" + next).getBytes());
                                 buffer.flip();
-                                // 操作三：通过DatagramChannel数据报通道发送数据
+                                //操作三：通过DatagramChannel数据报通道发送数据
                                 socketChannel.write(buffer);
                                 buffer.clear();
                             }
 
                         }
                         if (sk.isReadable()) {
-                            // 若选择键的IO事件是“可读”事件,读取数据
+                            //若选择键的IO事件是“可读”事件,读取数据
                             SocketChannel socketChannel = (SocketChannel) sk.channel();
 
                             //读取数据

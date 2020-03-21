@@ -31,7 +31,7 @@ public class IDMaker {
 
     private String createSeqNode(String pathPefix) {
         try {
-            // 创建一个 ZNode 顺序节点
+            //创建一个 ZNode 顺序节点
 
             String destPath = client.create()
                     .creatingParentsIfNeeded()

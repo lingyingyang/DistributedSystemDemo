@@ -76,9 +76,9 @@ public class JoinDemo {
         hThread.start();
         wThread.start();
         try {
-            // 合并烧水-线程
+            //合并烧水-线程
             hThread.join();
-            // 合并清洗-线程
+            //合并清洗-线程
             wThread.join();
 
             Thread.currentThread().setName("主线程");

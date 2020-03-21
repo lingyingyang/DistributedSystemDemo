@@ -20,26 +20,23 @@ public class ProtobufDecoder extends ByteToMessageDecoder
     protected void decode(ChannelHandlerContext ctx, ByteBuf in,
                           List<Object> out) throws Exception
     {
-        // 标记一下当前的readIndex的位置
+        //标记一下当前的readIndex的位置
         in.markReaderIndex();
-        // 判断包头长度
-        if (in.readableBytes() < 2)
-        {// 不够包头
+        //判断包头长度
+        if (in.readableBytes() < 2) {//不够包头
             return;
         }
 
-        // 读取传送过来的消息的长度。
+        //读取传送过来的消息的长度。
         int length = in.readUnsignedShort();
 
-        // 长度如果小于0
-        if (length < 0)
-        {// 非法数据，关闭连接
+        //长度如果小于0
+        if (length < 0) {//非法数据，关闭连接
             ctx.close();
         }
 
-        if (length > in.readableBytes())
-        {// 读到的消息体长度如果小于传送过来的消息长度
-            // 重置读取位置
+        if (length > in.readableBytes()) {//读到的消息体长度如果小于传送过来的消息长度
+            //重置读取位置
             in.resetReaderIndex();
             return;
         }
@@ -61,14 +58,14 @@ public class ProtobufDecoder extends ByteToMessageDecoder
             in.readBytes( array, 0, length);
         }
 
-        // 字节转成对象
+        //字节转成对象
         ProtoMsg.Message outmsg =
                 ProtoMsg.Message.parseFrom(array);
 
 
         if (outmsg != null)
         {
-            // 获取业务消息头
+            //获取业务消息头
             out.add(outmsg);
         }
 

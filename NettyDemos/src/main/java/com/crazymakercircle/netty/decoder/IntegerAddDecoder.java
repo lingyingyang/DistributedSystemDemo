@@ -34,7 +34,7 @@ public class IntegerAddDecoder
                 //从装饰器ByteBuf 中读取数据
                 first = in.readInt();
                 //第一步解析成功，
-                // 进入第二步，并且设置“读指针断点”为当前的读取位置
+                //进入第二步，并且设置“读指针断点”为当前的读取位置
                 checkpoint(Status.PARSE_2);
                 break;
             case PARSE_2:

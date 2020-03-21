@@ -86,19 +86,18 @@ public class ProtoInstant
     /**
      * 返回码枚举类
      */
-    public enum ResultCodeEnum
-    {
+    public enum ResultCodeEnum {
 
-        SUCCESS(0, "Success"),  // 成功
+        SUCCESS(0, "Success"),  //成功
         AUTH_FAILED(1, "登录失败"),
         NO_TOKEN(2, "没有授权码"),
-        UNKNOW_ERROR(3, "未知错误"),;
+        UNKNOW_ERROR(3, "未知错误"),
+        ;
 
         private Integer code;
         private String desc;
 
-        ResultCodeEnum(Integer code, String desc)
-        {
+        ResultCodeEnum(Integer code, String desc) {
             this.code = code;
             this.desc = desc;
         }

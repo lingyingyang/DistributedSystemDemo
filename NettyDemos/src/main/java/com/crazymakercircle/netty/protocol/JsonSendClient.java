@@ -45,7 +45,7 @@ public class JsonSendClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 //初始化客户端channel
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    // 客户端channel流水线添加2个handler处理器
+                    //客户端channel流水线添加2个handler处理器
                     ch.pipeline().addLast(new LengthFieldPrepender(4));
                     ch.pipeline().addLast(new StringEncoder(CharsetUtil.UTF_8));
                 }
@@ -60,7 +60,7 @@ public class JsonSendClient {
                 }
             });
 
-            // 阻塞,直到连接完成
+            //阻塞,直到连接完成
             f.sync();
             Channel channel = f.channel();
 
@@ -73,16 +73,16 @@ public class JsonSendClient {
             channel.flush();
 
 
-            // 7 等待通道关闭的异步任务结束
-            // 服务监听通道会一直等待通道关闭的异步任务结束
+            //7 等待通道关闭的异步任务结束
+            //服务监听通道会一直等待通道关闭的异步任务结束
             ChannelFuture closeFuture = channel.closeFuture();
             closeFuture.sync();
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 优雅关闭EventLoopGroup，
-            // 释放掉所有资源包括创建的线程
+            //优雅关闭EventLoopGroup，
+            //释放掉所有资源包括创建的线程
             workerLoopGroup.shutdownGracefully();
         }
 

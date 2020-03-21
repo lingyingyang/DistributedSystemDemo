@@ -17,9 +17,9 @@ public class NioDiscardClient {
                 new InetSocketAddress(NioDemoConfig.SOCKET_SERVER_IP,
                         NioDemoConfig.SOCKET_SERVER_PORT);
 
-        // 1、获取通道（channel）
+        //1、获取通道（channel）
         SocketChannel socketChannel = SocketChannel.open(address);
-        // 2、切换成非阻塞模式
+        //2、切换成非阻塞模式
         socketChannel.configureBlocking(false);
         //不断的自旋、等待连接完成，或者做一些其他的事情
         while (!socketChannel.finishConnect()) {
@@ -27,7 +27,7 @@ public class NioDiscardClient {
         }
 
         Logger.info("客户端连接成功");
-        // 3、分配指定大小的缓冲区
+        //3、分配指定大小的缓冲区
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
         byteBuffer.put("hello world".getBytes());
         byteBuffer.flip();

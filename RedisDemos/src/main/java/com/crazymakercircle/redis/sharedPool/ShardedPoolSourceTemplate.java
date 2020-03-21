@@ -50,7 +50,7 @@ public class ShardedPoolSourceTemplate {
     ) {
         boolean keyExist = pool.exists(key);
         if (keyExist) {
-            // NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
+            //NX是不存在时才set， XX是存在时才set， EX是秒，PX是毫秒
             return pool.set(key, value, "XX", "EX", seconds);
         } else {
             return pool.set(key, value, "NX", "EX", seconds);

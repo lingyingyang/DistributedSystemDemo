@@ -23,7 +23,7 @@ public class StringDemo {
         Logger.info("jedis.type(key0): " + jedis.type("key0"));
         //get key
         Logger.info("jedis.get(key0): " + jedis.get("key0"));
-        // key是否存在
+        //key是否存在
         Logger.info("jedis.exists(key0):" + jedis.exists("key0"));
         //返回key的长度
         Logger.info("jedis.strlen(key0): " + jedis.strlen("key0"));
@@ -63,7 +63,7 @@ public class StringDemo {
 
         //返回0 只有在key不存在的时候才设置
         Logger.info("jedis.setnx(key3): " + jedis.setnx("key3", "existVal"));
-        Logger.info("jedis.get(key3): " + jedis.get("key3"));// 3.1
+        Logger.info("jedis.get(key3): " + jedis.get("key3"));//3.1
 
         //只有key都不存在的时候才设置,这里返回 null
         Logger.info("jedis.msetnx(key2,key3): " + jedis.msetnx("key2", "exists1", "key3", "exists2"));
@@ -76,7 +76,7 @@ public class StringDemo {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // 2 seconds is no Val
+        //2 seconds is no Val
         Logger.info("jedis.get(key4): " + jedis.get("key4"));
 
 

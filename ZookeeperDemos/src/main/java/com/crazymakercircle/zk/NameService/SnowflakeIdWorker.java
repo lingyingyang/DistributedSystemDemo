@@ -1,7 +1,7 @@
 package com.crazymakercircle.zk.NameService;
 
 import com.crazymakercircle.util.JsonUtil;
-import com.crazymakercircle.zk.ZKclient;
+import com.crazymakercircle.zk.ZkClient;
 import lombok.Data;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.CreateMode;
@@ -18,14 +18,14 @@ public class SnowflakeIdWorker {
     public static SnowflakeIdWorker instance = new SnowflakeIdWorker();
 
     private SnowflakeIdWorker() {
-        instance.client = ZKclient.instance.getClient();
+        instance.client = ZkClient.instance.getClient();
         instance.init();
     }
 
-    // 在zookeeper中创建临时节点并写入信息
+    //在zookeeper中创建临时节点并写入信息
     public void init() {
-        // 创建一个 ZNode 节点
-        // 节点的 payload 为当前worker 实例
+        //创建一个 ZNode 节点
+        //节点的 payload 为当前worker 实例
         try {
             byte[] payload = JsonUtil.Object2JsonBytes(this);
             pathRegistered = client

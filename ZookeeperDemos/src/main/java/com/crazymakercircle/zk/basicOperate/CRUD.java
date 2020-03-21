@@ -29,8 +29,8 @@ public class CRUD {
             //启动客户端实例,连接服务器
             client.start();
 
-            // 创建一个 ZNode 节点
-            // 节点的数据为 payload
+            //创建一个 ZNode 节点
+            //节点的数据为 payload
 
             String zkPath = "/test/CRUD/remoteNode-1";
             Stat stat = client.checkExists().forPath(zkPath);
@@ -60,16 +60,16 @@ public class CRUD {
             //启动客户端实例,连接服务器
             client.start();
 
-            // 创建一个 ZNode 节点
-            // 节点的数据为 payload
+            //创建一个 ZNode 节点
+            //节点的数据为 payload
 
             String data = "hello";
             byte[] payload = data.getBytes("UTF-8");
             String zkPath = "/test/CRUD/remoteNode-1";
             client.create()
-                    .creatingParentsIfNeeded()
-                    .withMode(CreateMode.PERSISTENT)
-                    .forPath(zkPath, payload);
+                  .creatingParentsIfNeeded()
+                  .withMode(CreateMode.PERSISTENT)
+                  .forPath(zkPath, payload);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,17 +90,17 @@ public class CRUD {
             //启动客户端实例,连接服务器
             client.start();
 
-            // 创建一个 ZNode 节点
-            // 节点的数据为 payload
+            //创建一个 ZNode 节点
+            //节点的数据为 payload
 
             String data = "hello";
             byte[] payload = data.getBytes("UTF-8");
             String zkPath = "/test/remoteNode-2";
             client.create()
-                    .creatingParentsIfNeeded()
+                  .creatingParentsIfNeeded()
 
-                    .withMode(CreateMode.EPHEMERAL)
-                    .forPath(zkPath, payload);
+                  .withMode(CreateMode.EPHEMERAL)
+                  .forPath(zkPath, payload);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,8 +120,8 @@ public class CRUD {
             //启动客户端实例,连接服务器
             client.start();
 
-            // 创建一个 ZNode 节点
-            // 节点的数据为 payload
+            //创建一个 ZNode 节点
+            //节点的数据为 payload
 
             String data = "hello";
 
@@ -129,9 +129,9 @@ public class CRUD {
                 byte[] payload = data.getBytes("UTF-8");
                 String zkPath = "/test/remoteNode-seq-";
                 client.create()
-                        .creatingParentsIfNeeded()
-                        .withMode(CreateMode.PERSISTENT_SEQUENTIAL)
-                        .forPath(zkPath, payload);
+                      .creatingParentsIfNeeded()
+                      .withMode(CreateMode.PERSISTENT_SEQUENTIAL)
+                      .forPath(zkPath, payload);
             }
 
         } catch (Exception e) {

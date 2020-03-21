@@ -14,12 +14,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class CallbackTaskScheduler extends Thread
-{
+public class CallbackTaskScheduler extends Thread {
     private final Logger logger = Logger.getLogger(this.getClass());
     private ConcurrentLinkedQueue<CallbackTask> executeTaskQueue =
-            new ConcurrentLinkedQueue<CallbackTask>();// 任务队列
-    private long sleepTime = 200;// 线程休眠时间
+            new ConcurrentLinkedQueue<CallbackTask>();//任务队列
+    private long sleepTime = 200;//线程休眠时间
     private ExecutorService jPool =
             Executors.newFixedThreadPool(10);
 
@@ -51,7 +50,7 @@ public class CallbackTaskScheduler extends Thread
     {
         while (true)
         {
-            handleTask();// 处理任务
+            handleTask();//处理任务
             threadSleep(sleepTime);
         }
     }

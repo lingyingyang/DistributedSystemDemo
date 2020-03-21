@@ -25,7 +25,7 @@ public class CacheOperationService {
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
-    // --------------RedisTemplate 基础操作  --------------------
+    //--------------RedisTemplate 基础操作  --------------------
 
 
     /**
@@ -104,7 +104,7 @@ public class CacheOperationService {
             }
         }
     }
-    // --------------RedisTemplate 操作 String --------------------
+    //--------------RedisTemplate 操作 String --------------------
 
 
     /**
@@ -187,7 +187,7 @@ public class CacheOperationService {
                 .opsForValue().increment(key, -delta);
     }
 
-    // --------------RedisTemplate 操作 Map --------------------
+    //--------------RedisTemplate 操作 Map --------------------
 
     /**
      * HashGet
@@ -333,7 +333,7 @@ public class CacheOperationService {
         return redisTemplate.opsForHash().increment(key, field, -by);
     }
 
-    // --------------RedisTemplate 操作 Set --------------------
+    //--------------RedisTemplate 操作 Set --------------------
 
     /**
      * 根据key获取Set中的所有值
@@ -433,7 +433,7 @@ public class CacheOperationService {
             return 0;
         }
     }
-    // --------------RedisTemplate 操作list --------------------
+    //--------------RedisTemplate 操作list --------------------
 
     /**
      * 获取list缓存的内容

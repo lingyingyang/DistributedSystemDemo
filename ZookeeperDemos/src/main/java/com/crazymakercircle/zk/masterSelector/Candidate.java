@@ -24,12 +24,12 @@ public class Candidate {
     private String port;
     private String name;
 
-    // 争抢Master
+    //争抢Master
     private void takeMaster() {
 
         try {
             byte[] payload = JsonUtil.Object2JsonBytes(this);
-            // 尝试创建Master临时节点
+            //尝试创建Master临时节点
             client.create()
                     .creatingParentsIfNeeded()
                     .withProtection()
@@ -43,7 +43,7 @@ public class Candidate {
 
     }
 
-    // 释放Master
+    //释放Master
     private void releaseMaster() throws Exception {
         byte[] payload = client.getData()
                 .forPath(workerPath);

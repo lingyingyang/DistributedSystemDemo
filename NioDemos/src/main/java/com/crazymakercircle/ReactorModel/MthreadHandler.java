@@ -28,7 +28,7 @@ class MthreadHandler implements Runnable
     {
         channel = c;
         c.configureBlocking(false);
-        // Optionally try first read now
+        //Optionally try first read now
         selectionKey = channel.register(selector, 0);
 
         //将Handler作为callback对象
@@ -77,7 +77,7 @@ class MthreadHandler implements Runnable
 
     synchronized void read() throws IOException
     {
-        // ...
+        //...
         channel.read(input);
         if (inputIsComplete())
         {
@@ -102,7 +102,7 @@ class MthreadHandler implements Runnable
     {
         process();
         state = SENDING;
-        // or rebind attachment
+        //or rebind attachment
         //process完,开始等待write就绪
         selectionKey.interestOps(SelectionKey.OP_WRITE);
     }

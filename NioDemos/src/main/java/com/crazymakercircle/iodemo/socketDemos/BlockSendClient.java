@@ -28,8 +28,7 @@ public class BlockSendClient extends Socket
      *
      * @throws Exception
      */
-    public BlockSendClient() throws Exception
-    {
+    public BlockSendClient() throws Exception {
         super(NioDemoConfig.SOCKET_SERVER_IP
                 , NioDemoConfig.SOCKET_SERVER_PORT);
         this.client = this;
@@ -37,27 +36,39 @@ public class BlockSendClient extends Socket
     }
 
     /**
+     * 入口
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        try {
+            BlockSendClient client = new BlockSendClient(); //启动客户端连接
+            client.sendFile(); //传输文件
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 向服务端传输文件
      *
      * @throws Exception
      */
-    public void sendFile() throws Exception
-    {
-        try
-        {
+    public void sendFile() throws Exception {
+        try {
             File file = new File(NioDemoConfig.SOCKET_SEND_FILE);
             if (file.exists())
             {
                 fis = new FileInputStream(file);
                 dos = new DataOutputStream(client.getOutputStream());
 
-                // 文件名和长度
+                //文件名和长度
                 dos.writeUTF("copy_" + file.getName());
                 dos.flush();
                 dos.writeLong(file.length());
                 dos.flush();
 
-                // 开始传输文件
+                //开始传输文件
                 Logger.debug("======== 开始传输文件 ========");
                 byte[] bytes = new byte[1024];
                 int length = 0;
@@ -81,23 +92,6 @@ public class BlockSendClient extends Socket
             IOUtil.closeQuietly(dos);
             IOUtil.closeQuietly(client);
 
-        }
-    }
-
-    /**
-     * 入口
-     *
-     * @param args
-     */
-    public static void main(String[] args)
-    {
-        try
-        {
-            BlockSendClient client = new BlockSendClient(); // 启动客户端连接
-            client.sendFile(); // 传输文件
-        } catch (Exception e)
-        {
-            e.printStackTrace();
         }
     }
 

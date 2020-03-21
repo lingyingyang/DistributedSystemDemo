@@ -32,10 +32,10 @@ public class Manger {
 
     protected Worker balance(List<Worker> items) {
         if (items.size() > 0) {
-            // 根据负载由小到大排序
+            //根据负载由小到大排序
             Collections.sort(items);
 
-            // 返回负载最小的那个
+            //返回负载最小的那个
             return items.get(0);
         } else {
             return null;

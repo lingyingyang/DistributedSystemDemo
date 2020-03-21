@@ -23,7 +23,7 @@ public class StringHeaderDecoder extends ByteToMessageDecoder {    //头是一�
 
         //头已经完整
         //在真正开始从buffer读取数据之前，调用markReaderIndex()设置回滚点
-        // 回滚点为 header的readIndex位置
+        //回滚点为 header的readIndex位置
         buf.markReaderIndex();
         int length = buf.readInt();
         //从buffer中读出头的大小，这会使得readIndex前移
@@ -33,7 +33,7 @@ public class StringHeaderDecoder extends ByteToMessageDecoder {    //头是一�
             buf.resetReaderIndex();
             return;
         }
-        // 读取数据，编码成字符串
+        //读取数据，编码成字符串
         byte[] inBytes = new byte[length];
         buf.readBytes(inBytes, 0, length);
         out.add(new String(inBytes, "UTF-8"));

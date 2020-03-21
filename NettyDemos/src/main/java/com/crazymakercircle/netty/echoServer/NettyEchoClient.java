@@ -46,8 +46,8 @@ public class NettyEchoClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 //有连接到达时会创建一个channel
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    // pipeline管理子通道channel中的Handler
-                    // 向子channel流水线添加一个handler处理器
+                    //pipeline管理子通道channel中的Handler
+                    //向子channel流水线添加一个handler处理器
                     ch.pipeline().addLast(NettyEchoClientHandler.INSTANCE);
                 }
             });
@@ -63,7 +63,7 @@ public class NettyEchoClient {
 
             });
 
-            // 阻塞,直到连接完成
+            //阻塞,直到连接完成
             f.sync();
             Channel channel = f.channel();
 
@@ -84,8 +84,8 @@ public class NettyEchoClient {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 优雅关闭EventLoopGroup，
-            // 释放掉所有资源包括创建的线程
+            //优雅关闭EventLoopGroup，
+            //释放掉所有资源包括创建的线程
             workerLoopGroup.shutdownGracefully();
         }
 

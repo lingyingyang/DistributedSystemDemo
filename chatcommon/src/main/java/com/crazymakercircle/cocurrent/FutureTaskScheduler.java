@@ -12,18 +12,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-public class FutureTaskScheduler extends Thread
-{
+public class FutureTaskScheduler extends Thread {
     private final Logger logger = Logger.getLogger(this.getClass());
     private ConcurrentLinkedQueue<ExecuteTask> executeTaskQueue =
-            new ConcurrentLinkedQueue<ExecuteTask>();// 任务队列
-    private long sleepTime = 200;// 线程休眠时间
+            new ConcurrentLinkedQueue<ExecuteTask>();//任务队列
+    private long sleepTime = 200;//线程休眠时间
     private ExecutorService pool = Executors.newFixedThreadPool(10);
 
     private static FutureTaskScheduler inst = new FutureTaskScheduler();
 
-    private FutureTaskScheduler()
-    {
+    private FutureTaskScheduler() {
         this.start();
     }
 
@@ -44,7 +42,7 @@ public class FutureTaskScheduler extends Thread
     {
         while (true)
         {
-            handleTask();// 处理任务
+            handleTask();//处理任务
             threadSleep(sleepTime);
         }
     }

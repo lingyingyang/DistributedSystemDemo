@@ -20,7 +20,7 @@ public class SnowflakeIdGenerator {
      */
     public synchronized void init(long workerId) {
         if (workerId > MAX_WORKER_ID) {
-            // zk分配的workerId过大
+            //zk分配的workerId过大
             throw new IllegalArgumentException("woker Id wrong: " + workerId);
         }
         instance.workerId = workerId;
@@ -99,27 +99,27 @@ public class SnowflakeIdGenerator {
         long current = System.currentTimeMillis();
 
         if (current < lastTimestamp) {
-            // 如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过，出现问题返回-1
+            //如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过，出现问题返回-1
             return -1;
         }
 
         if (current == lastTimestamp) {
-            // 如果当前生成id的时间还是上次的时间，那么对sequence序列号进行+1
+            //如果当前生成id的时间还是上次的时间，那么对sequence序列号进行+1
             sequence = (sequence + 1) & MAX_SEQUENCE;
 
             if (sequence == MAX_SEQUENCE) {
-                // 当前毫秒生成的序列数已经大于最大值，那么阻塞到下一个毫秒再获取新的时间戳
+                //当前毫秒生成的序列数已经大于最大值，那么阻塞到下一个毫秒再获取新的时间戳
                 current = this.nextMs(lastTimestamp);
             }
         } else {
-            // 当前的时间戳已经是下一个毫秒
+            //当前的时间戳已经是下一个毫秒
             sequence = 0L;
         }
 
-        // 更新上次生成id的时间戳
+        //更新上次生成id的时间戳
         lastTimestamp = current;
 
-        // 进行移位操作生成int64的唯一ID
+        //进行移位操作生成int64的唯一ID
 
         //时间戳右移动23位
         long time = (current - START_TIME) << TIMESTAMP_LEFT_SHIFT;

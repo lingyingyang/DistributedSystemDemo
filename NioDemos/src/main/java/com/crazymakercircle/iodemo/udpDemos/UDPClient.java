@@ -27,7 +27,7 @@ public class UDPClient {
             String next = scanner.next();
             buffer.put((Dateutil.getNow() + " >>" + next).getBytes());
             buffer.flip();
-            // 操作三：通过DatagramChannel数据报通道发送数据
+            //操作三：通过DatagramChannel数据报通道发送数据
             dChannel.send(buffer,
                     new InetSocketAddress(NioDemoConfig.SOCKET_SERVER_IP
                             , NioDemoConfig.SOCKET_SERVER_PORT));

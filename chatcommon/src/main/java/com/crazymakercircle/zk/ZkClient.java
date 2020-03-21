@@ -12,7 +12,7 @@ import org.apache.zookeeper.data.Stat;
  **/
 @Slf4j
 @Data
-public class ZKclient {
+public class ZkClient {
 
 
     private CuratorFramework client;
@@ -20,25 +20,23 @@ public class ZKclient {
     //Zk集群地址
     private static final String ZK_ADDRESS = "127.0.0.1:2181";
 
-    public static ZKclient instance = null;
+    public static ZkClient instance = null;
 
     static {
-        instance = new ZKclient();
+        instance = new ZkClient();
         instance.init();
     }
 
-    private ZKclient() {
+    private ZkClient() {
 
     }
 
     public void init() {
-
         if (null != client) {
             return;
         }
         //创建客户端
         client = ClientFactory.createSimple(ZK_ADDRESS);
-
         //启动客户端实例,连接服务器
         client.start();
     }
@@ -53,16 +51,16 @@ public class ZKclient {
      */
     public void createNode(String zkPath, String data) {
         try {
-            // 创建一个 ZNode 节点
-            // 节点的数据为 payload
+            //创建一个 ZNode 节点
+            //节点的数据为 payload
             byte[] payload = "to set content".getBytes("UTF-8");
             if (data != null) {
                 payload = data.getBytes("UTF-8");
             }
             client.create()
-                    .creatingParentsIfNeeded()
-                    .withMode(CreateMode.PERSISTENT)
-                    .forPath(zkPath, payload);
+                  .creatingParentsIfNeeded()
+                  .withMode(CreateMode.PERSISTENT)
+                  .forPath(zkPath, payload);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -115,7 +113,7 @@ public class ZKclient {
     public String createEphemeralSeqNode(String srcpath) {
         try {
 
-            // 创建一个 ZNode 节点
+            //创建一个 ZNode 节点
             String path = client.create()
                     .creatingParentsIfNeeded()
                     .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)

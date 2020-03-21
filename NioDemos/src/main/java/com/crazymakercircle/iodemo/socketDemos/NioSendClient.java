@@ -113,8 +113,8 @@ public class NioSendClient {
      */
     public static void main(String[] args) {
 
-        NioSendClient client = new NioSendClient(); // 启动客户端连接
-        client.sendFile(); // 传输文件
+        NioSendClient client = new NioSendClient(); //启动客户端连接
+        client.sendFile(); //传输文件
 
     }
 

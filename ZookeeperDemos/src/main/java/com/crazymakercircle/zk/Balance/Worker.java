@@ -46,19 +46,19 @@ public class Worker implements Comparable<Worker> {
     }
 
 
-    // 在zookeeper中创建临时节点并写入信息
+    //在zookeeper中创建临时节点并写入信息
     public void init() {
 
-        // 创建一个 ZNode 节点
-        // 节点的 payload 为当前worker 实例
+        //创建一个 ZNode 节点
+        //节点的 payload 为当前worker 实例
 
         try {
             byte[] payload = JsonUtil.Object2JsonBytes(this);
 
             client.create()
-                    .creatingParentsIfNeeded()
-                    .withMode(CreateMode.EPHEMERAL)
-                    .forPath(workerPath, payload);
+                  .creatingParentsIfNeeded()
+                  .withMode(CreateMode.EPHEMERAL)
+                  .forPath(workerPath, payload);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,7 +67,7 @@ public class Worker implements Comparable<Worker> {
 
     public boolean addBalance(Integer step) {
 
-        // 增加负载：增加负载，并写回zookeeper
+        //增加负载：增加负载，并写回zookeeper
         while (true) {
             try {
                 this.setBalance(this.getBalance() + step);
@@ -83,7 +83,7 @@ public class Worker implements Comparable<Worker> {
 
     public boolean subBalance(Integer step) {
 
-        // 增加负载：增加负载，并写回zookeeper
+        //增加负载：增加负载，并写回zookeeper
         while (true) {
             try {
                 Integer curBalance = this.getBalance();

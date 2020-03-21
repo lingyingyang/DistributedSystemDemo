@@ -23,7 +23,7 @@ public class ReflectionUtil
     public static String getCallMethod()
     {
         StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-        // 获得调用方法名
+        //获得调用方法名
         String method = stack[3].getMethodName();
         return method;
     }
@@ -36,7 +36,7 @@ public class ReflectionUtil
     public static String getCallClassMethod()
     {
         StackTraceElement stack[] = Thread.currentThread().getStackTrace();
-        // 获得调用方法名
+        //获得调用方法名
         String[] className = stack[3].getClassName().split("\\.");
         String fullName = className[className.length - 1] + ":" + stack[3].getMethodName();
         return fullName;
@@ -50,7 +50,7 @@ public class ReflectionUtil
     public static String getNakeCallClassMethod()
     {
         StackTraceElement stack[] = Thread.currentThread().getStackTrace();
-        // 获得调用方法名
+        //获得调用方法名
         String[] className = stack[3].getClassName().split("\\.");
         String fullName = className[className.length - 1] + "." + stack[3].getMethodName();
         return fullName;

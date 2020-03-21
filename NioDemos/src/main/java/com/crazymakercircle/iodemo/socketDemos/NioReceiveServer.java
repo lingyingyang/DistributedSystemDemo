@@ -55,42 +55,42 @@ public class NioReceiveServer {
 
 
     public void startServer() throws IOException {
-        // 1、获取Selector选择器
+        //1、获取Selector选择器
         Selector selector = Selector.open();
 
-        // 2、获取通道
+        //2、获取通道
         ServerSocketChannel serverChannel = ServerSocketChannel.open();
         ServerSocket serverSocket = serverChannel.socket();
 
-        // 3.设置为非阻塞
+        //3.设置为非阻塞
         serverChannel.configureBlocking(false);
-        // 4、绑定连接
+        //4、绑定连接
         InetSocketAddress address
                 = new InetSocketAddress(NioDemoConfig.SOCKET_SERVER_PORT);
         serverSocket.bind(address);
-        // 5、将通道注册到选择器上,并注册的IO事件为：“接收新连接”
+        //5、将通道注册到选择器上,并注册的IO事件为：“接收新连接”
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);
         Print.tcfo("serverChannel is linstening...");
-        // 6、轮询感兴趣的I/O就绪事件（选择键集合）
+        //6、轮询感兴趣的I/O就绪事件（选择键集合）
         while (selector.select() > 0) {
-            // 7、获取选择键集合
+            //7、获取选择键集合
             Iterator<SelectionKey> it = selector.selectedKeys().iterator();
             while (it.hasNext()) {
-                // 8、获取单个的选择键，并处理
+                //8、获取单个的选择键，并处理
                 SelectionKey key = it.next();
 
-                // 9、判断key是具体的什么事件，是否为新连接事件
+                //9、判断key是具体的什么事件，是否为新连接事件
                 if (key.isAcceptable()) {
-                    // 10、若接受的事件是“新连接”事件,就获取客户端新连接
+                    //10、若接受的事件是“新连接”事件,就获取客户端新连接
                     ServerSocketChannel server = (ServerSocketChannel) key.channel();
                     SocketChannel socketChannel = server.accept();
                     if (socketChannel == null) continue;
-                    // 11、客户端新连接，切换为非阻塞模式
+                    //11、客户端新连接，切换为非阻塞模式
                     socketChannel.configureBlocking(false);
-                    // 12、将客户端新连接通道注册到selector选择器上
+                    //12、将客户端新连接通道注册到selector选择器上
                     SelectionKey selectionKey =
                             socketChannel.register(selector, SelectionKey.OP_READ);
-                    // 余下为业务处理
+                    //余下为业务处理
                     Client client = new Client();
                     client.remoteAddress
                             = (InetSocketAddress) socketChannel.getRemoteAddress();
@@ -100,8 +100,8 @@ public class NioReceiveServer {
                 } else if (key.isReadable()) {
                     processData(key);
                 }
-                // NIO的特点只会累加，已选择的键的集合不会删除
-                // 如果不删除，下一次又会被select函数选中
+                //NIO的特点只会累加，已选择的键的集合不会删除
+                //如果不删除，下一次又会被select函数选中
                 it.remove();
             }
         }
@@ -122,7 +122,7 @@ public class NioReceiveServer {
                 //客户端发送过来的，首先是文件名
                 if (null == client.fileName) {
 
-                    // 文件名
+                    //文件名
                     String fileName = charset.decode(buffer).toString();
 
                     String destPath = IOUtil.getResourcePath(NioDemoConfig.SOCKET_RECEIVE_PATH);
@@ -143,7 +143,7 @@ public class NioReceiveServer {
                 }
                 //客户端发送过来的，其次是文件长度
                 else if (0 == client.fileLength) {
-                    // 文件长度
+                    //文件长度
                     long fileLength = buffer.getLong();
                     client.fileLength = fileLength;
                     client.startTime = System.currentTimeMillis();
@@ -151,7 +151,7 @@ public class NioReceiveServer {
                 }
                 //客户端发送过来的，最后是文件内容
                 else {
-                    // 写入文件
+                    //写入文件
                     client.outChannel.write(buffer);
                 }
                 buffer.clear();
@@ -162,7 +162,7 @@ public class NioReceiveServer {
             e.printStackTrace();
             return;
         }
-        // 调用close为-1 到达末尾
+        //调用close为-1 到达末尾
         if (num == -1) {
             IOUtil.closeQuietly(client.outChannel);
             System.out.println("上传完毕");

@@ -44,8 +44,8 @@ public class NettyDumpSendClient {
             b.handler(new ChannelInitializer<SocketChannel>() {
                 //有连接到达时会创建一个channel
                 protected void initChannel(SocketChannel ch) throws Exception {
-                    // pipeline管理子通道channel中的Handler
-                    // 向子channel流水线添加一个handler处理器
+                    //pipeline管理子通道channel中的Handler
+                    //向子channel流水线添加一个handler处理器
                     ch.pipeline().addLast(NettyEchoClientHandler.INSTANCE);
                 }
             });
@@ -61,7 +61,7 @@ public class NettyDumpSendClient {
 
             });
 
-            // 阻塞,直到连接完成
+            //阻塞,直到连接完成
             f.sync();
             Channel channel = f.channel();
 
@@ -75,16 +75,16 @@ public class NettyDumpSendClient {
             }
 
 
-            // 7 等待通道关闭的异步任务结束
-            // 服务监听通道会一直等待通道关闭的异步任务结束
-            ChannelFuture closeFuture =channel.closeFuture();
+            //7 等待通道关闭的异步任务结束
+            //服务监听通道会一直等待通道关闭的异步任务结束
+            ChannelFuture closeFuture = channel.closeFuture();
             closeFuture.sync();
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            // 优雅关闭EventLoopGroup，
-            // 释放掉所有资源包括创建的线程
+            //优雅关闭EventLoopGroup，
+            //释放掉所有资源包括创建的线程
             workerLoopGroup.shutdownGracefully();
         }
 

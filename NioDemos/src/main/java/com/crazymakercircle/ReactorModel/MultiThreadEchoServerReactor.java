@@ -49,7 +49,7 @@ class MultiThreadEchoServerReactor {
     }
 
     private void startService() {
-        // 一子反应器对应一条线程
+        //一子反应器对应一条线程
         new Thread(subReactors[0]).start();
         new Thread(subReactors[1]).start();
     }
@@ -92,7 +92,7 @@ class MultiThreadEchoServerReactor {
     }
 
 
-    // Handler:新连接处理器
+    //Handler:新连接处理器
     class AcceptorHandler implements Runnable {
         public void run() {
             try {

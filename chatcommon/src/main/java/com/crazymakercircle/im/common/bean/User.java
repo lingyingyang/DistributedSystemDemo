@@ -21,7 +21,7 @@ public class User implements Serializable {
         setPlatform(PLATTYPE.ANDROID);
     }
 
-    // windows,mac,android, ios, web , other
+    //windows,mac,android, ios, web , other
     public enum PLATTYPE {
         WINDOWS, MAC, ANDROID, IOS, WEB, OTHER;
     }

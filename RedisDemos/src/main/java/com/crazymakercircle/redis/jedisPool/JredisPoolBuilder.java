@@ -32,8 +32,8 @@ public class JredisPoolBuilder {
             config.setMaxTotal(MAX_TOTAL);
             config.setMaxIdle(MAX_IDLE);
             config.setMaxWaitMillis(1000 * 10);
-            // 在borrow一个jedis实例时，是否提前进行validate操作；
-            // 如果为true，则得到的jedis实例均是可用的；
+            //在borrow一个jedis实例时，是否提前进行validate操作；
+            //如果为true，则得到的jedis实例均是可用的；
             config.setTestOnBorrow(true);
             //new JedisPool(config, ADDR, PORT, TIMEOUT, AUTH);
             pool = new JedisPool(config, "127.0.0.1", 6379, 10000);

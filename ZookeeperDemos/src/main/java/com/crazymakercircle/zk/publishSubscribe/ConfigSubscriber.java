@@ -1,6 +1,6 @@
 package com.crazymakercircle.zk.publishSubscribe;
 
-import com.crazymakercircle.zk.ZKclient;
+import com.crazymakercircle.zk.ZkClient;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
@@ -17,7 +17,7 @@ import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
 @Data
 public class ConfigSubscriber {
     private String workerPath = "/test/config";
-    CuratorFramework client = ZKclient.instance.getClient();
+    CuratorFramework client = ZkClient.instance.getClient();
 
     public void init() {
 

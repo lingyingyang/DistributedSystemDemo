@@ -19,7 +19,7 @@ import java.text.DecimalFormat;
 public class BlockReceiveServer extends ServerSocket
 {
 
-    // 服务端端口
+    //服务端端口
     private static final int SERVER_PORT =
             NioDemoConfig.SOCKET_SERVER_PORT;
 
@@ -30,9 +30,23 @@ public class BlockReceiveServer extends ServerSocket
     private static DecimalFormat df = FormatUtil.decimalFormat(1);
 
 
-    public BlockReceiveServer() throws Exception
-    {
+    public BlockReceiveServer() throws Exception {
         super(SERVER_PORT);
+    }
+
+    /**
+     * 入口
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
+        try {
+            //启动服务端
+            BlockReceiveServer server = new BlockReceiveServer();
+            server.startServer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -41,11 +55,10 @@ public class BlockReceiveServer extends ServerSocket
      *
      * @throws Exception
      */
-    public void startServer() throws Exception
-    {
+    public void startServer() throws Exception {
         while (true)
         {
-            // server尝试接收其他Socket的连接请求，server的accept方法是阻塞式的
+            //server尝试接收其他Socket的连接请求，server的accept方法是阻塞式的
 
             Logger.debug("server listen at:" + SERVER_PORT);
             Socket socket = this.accept();
@@ -54,7 +67,7 @@ public class BlockReceiveServer extends ServerSocket
              * 都要先跟当前的客户端通信完之后才能再处理下一个连接请求。 这在并发比较多的情况下会严重影响程序的性能，
              * 为此，我们可以把它改为如下这种异步处理与客户端通信的方式
              */
-            // 每接收到一个Socket就建立一个新的线程来处理它
+            //每接收到一个Socket就建立一个新的线程来处理它
             new Thread(new Task(socket)).start();
 
 
@@ -85,7 +98,7 @@ public class BlockReceiveServer extends ServerSocket
             {
                 dis = new DataInputStream(socket.getInputStream());
 
-                // 文件名和长度
+                //文件名和长度
                 String fileName = dis.readUTF();
                 long fileLength = dis.readLong();
                 File directory = new File(RECIEVE_PATH);
@@ -98,7 +111,7 @@ public class BlockReceiveServer extends ServerSocket
                 long startTime = System.currentTimeMillis();
                 Logger.debug("block IO 传输开始：");
 
-                // 开始接收文件
+                //开始接收文件
                 byte[] bytes = new byte[1024];
                 int length = 0;
                 while ((length = dis.read(bytes, 0, bytes.length)) != -1)
@@ -122,25 +135,6 @@ public class BlockReceiveServer extends ServerSocket
                 IOUtil.closeQuietly(socket);
 
             }
-        }
-    }
-
-
-    /**
-     * 入口
-     *
-     * @param args
-     */
-    public static void main(String[] args)
-    {
-        try
-        {
-            // 启动服务端
-            BlockReceiveServer server = new BlockReceiveServer();
-            server.startServer();
-        } catch (Exception e)
-        {
-            e.printStackTrace();
         }
     }
 }
