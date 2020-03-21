@@ -8,9 +8,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-/**
- * create by 尼恩 @ 疯狂创客圈
- **/
 @Slf4j
 public class SnowflakeIdTest {
 
@@ -23,7 +20,7 @@ public class SnowflakeIdTest {
     public static void main(String[] args) throws InterruptedException {
         SnowflakeIdGenerator.instance.init(SnowflakeIdWorker.instance.getId());
         ExecutorService es = Executors.newFixedThreadPool(10);
-        final HashSet idSet = new HashSet();
+        final HashSet<Long> idSet = new HashSet<>();
         Collections.synchronizedCollection(idSet);
         long start = System.currentTimeMillis();
         log.info(" start generate id *");

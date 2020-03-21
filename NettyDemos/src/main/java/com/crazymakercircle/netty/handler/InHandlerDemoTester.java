@@ -11,12 +11,11 @@ import org.junit.Test;
  **/
 public class InHandlerDemoTester {
 
-
     @Test
     public void testInHandlerLifeCircle() {
         final InHandlerDemo inHandler = new InHandlerDemo();
         //初始化处理器
-        ChannelInitializer i = new ChannelInitializer<EmbeddedChannel>() {
+        ChannelInitializer<EmbeddedChannel> i = new ChannelInitializer<EmbeddedChannel>() {
             protected void initChannel(EmbeddedChannel ch) {
                 ch.pipeline().addLast(inHandler);
             }
@@ -38,8 +37,5 @@ public class InHandlerDemoTester {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
