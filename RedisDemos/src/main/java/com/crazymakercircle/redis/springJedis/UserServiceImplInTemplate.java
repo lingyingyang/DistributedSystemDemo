@@ -30,16 +30,11 @@ public class UserServiceImplInTemplate implements UserService {
     @Override
     public User saveUser(final User user) {
         //保存到缓存
-        redisTemplate.execute(new RedisCallback<User>() {
-
-            @Override
-            public User doInRedis(RedisConnection connection)
-                    throws DataAccessException {
-                byte[] key = serializeKey(USER_UID_PREFIX + user.getUid());
-                connection.set(key, serializeValue(user));
-                connection.expire(key, CASHE_LONG);
-                return user;
-            }
+        redisTemplate.execute((RedisCallback<User>) connection -> {
+            byte[] key = serializeKey(USER_UID_PREFIX + user.getUid());
+            connection.set(key, serializeValue(user));
+            connection.expire(key, CASHE_LONG);
+            return user;
         });
         //保存到数据库
         //...如mysql

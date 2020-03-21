@@ -1,9 +1,5 @@
 package com.crazymakercircle.redis.springJedis;
 
-/**
- * create by 尼恩 @ 疯狂创客圈
- **/
-
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.CollectionUtils;
 
@@ -12,31 +8,22 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-
-/**
- * create by 尼恩 @ 疯狂创客圈
- **/
-
 public class CacheOperationService {
-
-
     private RedisTemplate redisTemplate;
 
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
     //--------------RedisTemplate 基础操作  --------------------
-
-
     /**
      * 取得指定格式的所有的key
      *
-     * @param patens 匹配的表达式
+     * @param patterns 匹配的表达式
      * @return key 的集合
      */
-    public Set getKeys(Object patens) {
+    public Set getKeys(Object patterns) {
         try {
-            return redisTemplate.keys(patens);
+            return redisTemplate.keys(patterns);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

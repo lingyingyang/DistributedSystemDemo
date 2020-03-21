@@ -79,7 +79,6 @@ public class UserServiceImplWithAnno implements UserService {
 
     }
 
-
     /**
      * 一个方法上，加上三类cache处理
      */

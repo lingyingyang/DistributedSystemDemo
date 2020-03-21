@@ -2,9 +2,6 @@ package com.crazymakercircle.redis.springJedis;
 
 import com.crazymakercircle.im.common.bean.User;
 
-/**
- * create by 尼恩 @ 疯狂创客圈
- **/
 public interface UserService {
 
     /**
