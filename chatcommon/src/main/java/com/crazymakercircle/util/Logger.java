@@ -6,23 +6,18 @@
 package com.crazymakercircle.util;
 
 
-public class Logger
-{
+public class Logger {
 
     /**
      * 带着方法名输出，方法名称放在前面
      *
      * @param s 待输出的字符串形参
      */
-    public static void debug(Object s)
-    {
+    public static void debug(Object s) {
         String content = null;
-        if (null != s)
-        {
+        if (null != s) {
             content = s.toString().trim();
-        }
-        else
-        {
+        } else {
             content = "";
         }
 
@@ -36,15 +31,11 @@ public class Logger
      *
      * @param s 待输出的字符串形参
      */
-    synchronized public static void info(Object s)
-    {
+    synchronized public static void info(Object s) {
         String content = null;
-        if (null != s)
-        {
+        if (null != s) {
             content = s.toString().trim();
-        }
-        else
-        {
+        } else {
             content = "";
         }
         String cft = "[" + Thread.currentThread().getName() + "|" + ReflectionUtil.getNakeCallClassMethod() + "]";
@@ -59,12 +50,11 @@ public class Logger
      *
      * @param args 待输出的字符串形参
      */
-    synchronized public static void info(Object... args)
-    {
+    synchronized public static void info(Object... args) {
         StringBuilder content = new StringBuilder();
         ;
         for (int i = 0; i < args.length; i++) {
-            content.append(args[i]!=null?args[i].toString():"null");
+            content.append(args[i] != null ? args[i].toString() : "null");
             content.append(" ");
         }
 
@@ -80,12 +70,11 @@ public class Logger
      *
      * @param args 待输出的字符串形参
      */
-    synchronized public static void error(Object... args)
-    {
+    synchronized public static void error(Object... args) {
         StringBuilder content = new StringBuilder();
         ;
         for (int i = 0; i < args.length; i++) {
-            content.append(args[i]!=null?args[i].toString():"null");
+            content.append(args[i] != null ? args[i].toString() : "null");
             content.append(" ");
         }
 
@@ -101,8 +90,7 @@ public class Logger
      *
      * @param s 提示的字符串形参
      */
-    public static void hint(Object s)
-    {
+    public static void hint(Object s) {
         System.out.println("/--" + s + "--/");
     }
 }

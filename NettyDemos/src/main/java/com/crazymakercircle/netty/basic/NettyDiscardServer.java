@@ -12,6 +12,9 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
+/**
+ * Client: EchoClient
+ */
 public class NettyDiscardServer {
     private final int serverPort;
     ServerBootstrap b = new ServerBootstrap();
@@ -20,14 +23,19 @@ public class NettyDiscardServer {
         this.serverPort = port;
     }
 
+    public static void main(String[] args) throws InterruptedException {
+        int port = NettyDemoConfig.SOCKET_SERVER_PORT;
+        new NettyDiscardServer(port).runServer();
+    }
+
     public void runServer() {
         //创建reactor 线程组
-        EventLoopGroup bossLoopGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerLoopGroup = new NioEventLoopGroup();
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(3);
 
         try {
             //1 设置reactor 线程组
-            b.group(bossLoopGroup, workerLoopGroup);
+            b.group(bossGroup, workerGroup);
             //2 设置nio类型的channel
             b.channel(NioServerSocketChannel.class);
             //3 设置监听端口
@@ -61,14 +69,8 @@ public class NettyDiscardServer {
         } finally {
             //8 优雅关闭EventLoopGroup，
             //释放掉所有资源包括创建的线程
-            workerLoopGroup.shutdownGracefully();
-            bossLoopGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+            bossGroup.shutdownGracefully();
         }
-
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        int port = NettyDemoConfig.SOCKET_SERVER_PORT;
-        new NettyDiscardServer(port).runServer();
     }
 }

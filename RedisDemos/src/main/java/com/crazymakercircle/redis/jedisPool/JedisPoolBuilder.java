@@ -8,11 +8,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * create by 尼恩 @ 疯狂创客圈
- **/
-public class JredisPoolBuilder {
-
+public class JedisPoolBuilder {
     public static final int MAX_IDLE = 50;
     public static final int MAX_TOTAL = 50;
     private static JedisPool pool = null;
@@ -78,8 +74,5 @@ public class JredisPoolBuilder {
         }
         long end = System.currentTimeMillis();
         Logger.info("hotPool  毫秒数:", end - start);
-
     }
-
-
 }

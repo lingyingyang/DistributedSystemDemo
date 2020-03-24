@@ -12,11 +12,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-/**
- * create by 尼恩 @ 疯狂创客圈
- **/
 public class NettyEchoServer {
-
     private final int serverPort;
     ServerBootstrap b = new ServerBootstrap();
 
@@ -24,10 +20,15 @@ public class NettyEchoServer {
         this.serverPort = port;
     }
 
+    public static void main(String[] args) throws InterruptedException {
+        int port = NettyDemoConfig.SOCKET_SERVER_PORT;
+        new NettyEchoServer(port).runServer();
+    }
+
     public void runServer() {
         //创建reactor 线程组
         EventLoopGroup bossLoopGroup = new NioEventLoopGroup(1);
-        EventLoopGroup workerLoopGroup = new NioEventLoopGroup();
+        EventLoopGroup workerLoopGroup = new NioEventLoopGroup(5);
 
         try {
             //1 设置reactor 线程组
@@ -40,7 +41,6 @@ public class NettyEchoServer {
             b.option(ChannelOption.SO_KEEPALIVE, true);
             b.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
             b.childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
-
             //5 装配子通道流水线
             b.childHandler(new ChannelInitializer<SocketChannel>() {
                 //有连接到达时会创建一个channel
@@ -55,7 +55,6 @@ public class NettyEchoServer {
             ChannelFuture channelFuture = b.bind().sync();
             Logger.info(" 服务器启动成功，监听端口: " +
                     channelFuture.channel().localAddress());
-
             //7 等待通道关闭的异步任务结束
             //服务监听通道会一直等待通道关闭的异步任务结束
             ChannelFuture closeFuture = channelFuture.channel().closeFuture();
@@ -68,11 +67,5 @@ public class NettyEchoServer {
             workerLoopGroup.shutdownGracefully();
             bossLoopGroup.shutdownGracefully();
         }
-
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        int port = NettyDemoConfig.SOCKET_SERVER_PORT;
-        new NettyEchoServer(port).runServer();
     }
 }

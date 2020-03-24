@@ -14,24 +14,25 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.util.Scanner;
 
-/**
- * create by 尼恩 @ 疯狂创客圈
- **/
 public class NettyEchoClient {
-
+    Bootstrap b = new Bootstrap();
     private int serverPort;
     private String serverIp;
-    Bootstrap b = new Bootstrap();
 
     public NettyEchoClient(String ip, int port) {
         this.serverPort = port;
         this.serverIp = ip;
     }
 
+    public static void main(String[] args) throws InterruptedException {
+        int port = NettyDemoConfig.SOCKET_SERVER_PORT;
+        String ip = NettyDemoConfig.SOCKET_SERVER_IP;
+        new NettyEchoClient(ip, port).runClient();
+    }
+
     public void runClient() {
         //创建reactor 线程组
         EventLoopGroup workerLoopGroup = new NioEventLoopGroup();
-
         try {
             //1 设置reactor 线程组
             b.group(workerLoopGroup);
@@ -41,7 +42,6 @@ public class NettyEchoClient {
             b.remoteAddress(serverIp, serverPort);
             //4 设置通道的参数
             b.option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT);
-
             //5 装配子通道流水线
             b.handler(new ChannelInitializer<SocketChannel>() {
                 //有连接到达时会创建一个channel
@@ -52,8 +52,7 @@ public class NettyEchoClient {
                 }
             });
             ChannelFuture f = b.connect();
-            f.addListener((ChannelFuture futureListener) ->
-            {
+            f.addListener((ChannelFuture futureListener) -> {
                 if (futureListener.isSuccess()) {
                     Logger.info("EchoClient客户端连接成功!");
 
@@ -89,11 +88,5 @@ public class NettyEchoClient {
             workerLoopGroup.shutdownGracefully();
         }
 
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        int port = NettyDemoConfig.SOCKET_SERVER_PORT;
-        String ip = NettyDemoConfig.SOCKET_SERVER_IP;
-        new NettyEchoClient(ip, port).runClient();
     }
 }

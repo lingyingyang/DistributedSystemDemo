@@ -35,6 +35,10 @@ class EchoServerReactor implements Runnable {
         sk.attach(new AcceptorHandler());
     }
 
+    public static void main(String[] args) throws IOException {
+        new Thread(new EchoServerReactor()).start();
+    }
+
     public void run() {
         try {
             while (!Thread.interrupted()) {
@@ -53,7 +57,7 @@ class EchoServerReactor implements Runnable {
         }
     }
 
-    void dispatch(SelectionKey sk) {
+    private void dispatch(SelectionKey sk) {
         Runnable handler = (Runnable) sk.attachment();
         //调用之前attach绑定到选择键的handler处理器对象
         if (handler != null) {
@@ -72,10 +76,5 @@ class EchoServerReactor implements Runnable {
                 e.printStackTrace();
             }
         }
-    }
-
-
-    public static void main(String[] args) throws IOException {
-        new Thread(new EchoServerReactor()).start();
     }
 }

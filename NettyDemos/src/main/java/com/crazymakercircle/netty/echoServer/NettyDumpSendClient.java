@@ -10,26 +10,27 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
-/**
- * create by 尼恩 @ 疯狂创客圈
- **/
 public class NettyDumpSendClient {
-
+    Bootstrap b = new Bootstrap();
     private int serverPort;
     private String serverIp;
-    Bootstrap b = new Bootstrap();
 
     public NettyDumpSendClient(String ip, int port) {
         this.serverPort = port;
         this.serverIp = ip;
     }
 
+    public static void main(String[] args) throws InterruptedException {
+        int port = NettyDemoConfig.SOCKET_SERVER_PORT;
+        String ip = NettyDemoConfig.SOCKET_SERVER_IP;
+        new NettyDumpSendClient(ip, port).runClient();
+    }
+
     public void runClient() {
         //创建reactor 线程组
         EventLoopGroup workerLoopGroup = new NioEventLoopGroup();
-
         try {
             //1 设置reactor 线程组
             b.group(workerLoopGroup);
@@ -50,8 +51,7 @@ public class NettyDumpSendClient {
                 }
             });
             ChannelFuture f = b.connect();
-            f.addListener((ChannelFuture futureListener) ->
-            {
+            f.addListener((ChannelFuture futureListener) -> {
                 if (futureListener.isSuccess()) {
                     Logger.info("EchoClient客户端连接成功!");
 
@@ -66,7 +66,7 @@ public class NettyDumpSendClient {
             Channel channel = f.channel();
 
             //6发送大量的文字
-            byte[] bytes = "疯狂创客圈：高性能学习社群!".getBytes(Charset.forName("utf-8"));
+            byte[] bytes = "疯狂创客圈：高性能学习社群!".getBytes(StandardCharsets.UTF_8);
             for (int i = 0; i < 1000; i++) {
                 //发送ByteBuf
                 ByteBuf buffer = channel.alloc().buffer();
@@ -74,12 +74,10 @@ public class NettyDumpSendClient {
                 channel.writeAndFlush(buffer);
             }
 
-
             //7 等待通道关闭的异步任务结束
             //服务监听通道会一直等待通道关闭的异步任务结束
             ChannelFuture closeFuture = channel.closeFuture();
             closeFuture.sync();
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -88,11 +86,5 @@ public class NettyDumpSendClient {
             workerLoopGroup.shutdownGracefully();
         }
 
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        int port = NettyDemoConfig.SOCKET_SERVER_PORT;
-        String ip = NettyDemoConfig.SOCKET_SERVER_IP;
-        new NettyDumpSendClient(ip, port).runClient();
     }
 }

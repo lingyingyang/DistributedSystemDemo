@@ -19,8 +19,7 @@ class MultiThreadEchoServerReactor {
     //selectors集合,引入多个selector选择器
     Selector[] selectors = new Selector[2];
     //引入多个子反应器
-    SubReactor[] subReactors = null;
-
+    SubReactor[] subReactors;
 
     MultiThreadEchoServerReactor() throws IOException {
         //初始化多个selector选择器
@@ -48,6 +47,11 @@ class MultiThreadEchoServerReactor {
         subReactors = new SubReactor[]{subReactor1, subReactor2};
     }
 
+    public static void main(String[] args) throws IOException {
+        MultiThreadEchoServerReactor server = new MultiThreadEchoServerReactor();
+        server.startService();
+    }
+
     private void startService() {
         //一子反应器对应一条线程
         new Thread(subReactors[0]).start();
@@ -55,7 +59,7 @@ class MultiThreadEchoServerReactor {
     }
 
     //反应器
-    class SubReactor implements Runnable {
+    static class SubReactor implements Runnable {
         //每条线程负责一个选择器的查询
         final Selector selector;
 
@@ -91,7 +95,6 @@ class MultiThreadEchoServerReactor {
         }
     }
 
-
     //Handler:新连接处理器
     class AcceptorHandler implements Runnable {
         public void run() {
@@ -106,13 +109,6 @@ class MultiThreadEchoServerReactor {
                 next.set(0);
             }
         }
-    }
-
-
-    public static void main(String[] args) throws IOException {
-        MultiThreadEchoServerReactor server =
-                new MultiThreadEchoServerReactor();
-        server.startService();
     }
 
 }

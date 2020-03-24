@@ -10,11 +10,11 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 
 class EchoHandler implements Runnable {
+    static final int RECEIVING = 0, SENDING = 1;
     final SocketChannel channel;
     final SelectionKey sk;
     final ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-    static final int RECIEVING = 0, SENDING = 1;
-    int state = RECIEVING;
+    int state = RECEIVING;
 
     EchoHandler(Selector selector, SocketChannel c) throws IOException {
         channel = c;
@@ -31,9 +31,7 @@ class EchoHandler implements Runnable {
     }
 
     public void run() {
-
         try {
-
             if (state == SENDING) {
                 //写入通道
                 channel.write(byteBuffer);
@@ -42,8 +40,8 @@ class EchoHandler implements Runnable {
                 //写完后,注册read就绪事件
                 sk.interestOps(SelectionKey.OP_READ);
                 //写完后,进入接收的状态
-                state = RECIEVING;
-            } else if (state == RECIEVING) {
+                state = RECEIVING;
+            } else if (state == RECEIVING) {
                 //从通道读
                 int length = 0;
                 while ((length = channel.read(byteBuffer)) > 0) {
@@ -62,7 +60,5 @@ class EchoHandler implements Runnable {
             ex.printStackTrace();
         }
     }
-
-
 }
 

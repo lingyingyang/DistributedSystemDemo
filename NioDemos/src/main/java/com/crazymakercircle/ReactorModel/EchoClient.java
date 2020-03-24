@@ -15,13 +15,13 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 
-/**
- * create by 尼恩 @ 疯狂创客圈
- **/
 public class EchoClient {
 
-    public void start() throws IOException {
+    public static void main(String[] args) throws IOException {
+        new EchoClient().start();
+    }
 
+    public void start() throws IOException {
         InetSocketAddress address =
                 new InetSocketAddress(NioDemoConfig.SOCKET_SERVER_IP,
                         NioDemoConfig.SOCKET_SERVER_PORT);
@@ -32,21 +32,19 @@ public class EchoClient {
         socketChannel.configureBlocking(false);
         //不断的自旋、等待连接完成，或者做一些其他的事情
         while (!socketChannel.finishConnect()) {
-
         }
         Print.tcfo("客户端启动成功！");
 
         //启动接受线程
-        Processer processer = new Processer(socketChannel);
-        new Thread(processer).start();
-
+        Processor processor = new Processor(socketChannel);
+        new Thread(processor).start();
     }
 
-    static class Processer implements Runnable {
+    static class Processor implements Runnable {
         final Selector selector;
         final SocketChannel channel;
 
-        Processer(SocketChannel channel) throws IOException {
+        Processor(SocketChannel channel) throws IOException {
             //Reactor初始化
             selector = Selector.open();
             this.channel = channel;
@@ -101,9 +99,5 @@ public class EchoClient {
                 ex.printStackTrace();
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        new EchoClient().start();
     }
 }
