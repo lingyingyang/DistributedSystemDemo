@@ -12,6 +12,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class NettyEchoClient {
@@ -62,7 +63,7 @@ public class NettyEchoClient {
 
             });
 
-            //阻塞,直到连接完成
+            //6 阻塞,直到连接完成
             f.sync();
             Channel channel = f.channel();
 
@@ -72,18 +73,17 @@ public class NettyEchoClient {
             while (scanner.hasNext()) {
                 //获取输入的内容
                 String next = scanner.next();
-                byte[] bytes = (Dateutil.getNow() + " >>" + next).getBytes("UTF-8");
-                //发送ByteBuf
+                byte[] bytes = (Dateutil.getNow() + " >>" + next).getBytes(StandardCharsets.UTF_8);
+                //7 发送ByteBuf
                 ByteBuf buffer = channel.alloc().buffer();
                 buffer.writeBytes(bytes);
                 channel.writeAndFlush(buffer);
                 Print.tcfo("请输入发送内容:");
-
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            //优雅关闭EventLoopGroup，
+            //8 优雅关闭EventLoopGroup，
             //释放掉所有资源包括创建的线程
             workerLoopGroup.shutdownGracefully();
         }
